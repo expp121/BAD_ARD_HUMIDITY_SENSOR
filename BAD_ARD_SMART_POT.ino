@@ -39,9 +39,8 @@ void setup() {
 	/*Setting up the Photo Resistor Pin to receive data*/
 	pinMode(PIN_PHOTO_REST, INPUT);
 }
-void soil_state()
+void watering_the_plant()
 {
-	PhPercVal_g = phr_read();
 	SenPercVal_g = smhs_read();
 	if (SenPercVal_g < 50)
 	{
@@ -58,10 +57,25 @@ void soil_state()
 		}
 	}
 }
+void info_output()
+{
+	SenPercVal_g = smhs_read();
+	PhPercVal_g = phr_read();
+	Serial.print("The Humudity in the soil is: ");
+	Serial.print(SenPercVal_g);
+	Serial.println("%");
+	Serial.print("Light Percentage: ");
+	Serial.print(PhPercVal_g);
+	Serial.println("%");
+}
 
 // the loop function runs over and over again until power down or reset
 void loop() 
 {
-	soil_state();
+	watering_the_plant();
+	info_output();
+	
+
+
 
 }
