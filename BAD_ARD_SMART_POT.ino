@@ -8,6 +8,9 @@ const int PIN_SMHS = A0;
 /*@Brief This is the Photo Resistor Pin(connected to 5V)*/
 const int PIN_PHOTO_REST = A1;
 
+/*@Brief This is Pump for watering the pot(connected to 12V)*/
+const int PIN_PUMP = A2;
+
 /*@Storing the value of the SMHS in percents*/
 volatile uint8_t SenPercVal_g;
 
@@ -36,8 +39,29 @@ void setup() {
 	/*Setting up the Photo Resistor Pin to receive data*/
 	pinMode(PIN_PHOTO_REST, INPUT);
 }
+void soil_state()
+{
+	PhPercVal_g = phr_read();
+	SenPercVal_g = smhs_read();
+	if (SenPercVal_g < 50)
+	{
+		for (uint8_t i = 0; i < 226; i++)
+		{
+			analogWrite(PIN_PUMP, i);
+		}
+	}
+	else
+	{
+		for (uint8_t i = 225; i > 0; i--)
+		{
+			analogWrite(PIN_PUMP, i);
+		}
+	}
+}
 
 // the loop function runs over and over again until power down or reset
-void loop() {
+void loop() 
+{
+	soil_state();
 
 }
