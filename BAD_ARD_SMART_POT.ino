@@ -51,7 +51,7 @@ void watering_the_plant()
 	}
 	else
 	{
-		for (uint8_t i = 225; i > 0; i--)
+		for (uint8_t i = 225; i >= 0; i--)
 		{
 			analogWrite(PIN_PUMP, i);
 		}
