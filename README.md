@@ -1,5 +1,6 @@
+
 # BaD_ARD_SMART_POT V0.1
-=============================
+==============================
 
 ## INTRODUCTION
 ------------------------------
@@ -16,6 +17,7 @@
 - Humidity Sensor
 - LED Lamp
 - Step motor
+
 **Not sure if everything is listed**
 
 ##FEATURES
