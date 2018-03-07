@@ -1,5 +1,4 @@
-
-# BaD_ARD_SMART_POT V0.1
+ # BaD_ARD_SMART_POT V0.1
 =======================
 
 ### INTRODUCTION
@@ -8,7 +7,7 @@
 - The Project Writen on Arduino Uno
 - It is not tested and finished yet.
 
-###Stuff used in the project
+### Stuff used in the project
 
 - Arduino Uno
 - Photo Resistor
@@ -24,14 +23,14 @@
 
 **Not sure if everything is listed**
 
-##FEATURES
+## FEATURES
 
 - Automated Watering
 - Automated Rotating towards a light source
 - Information Display
 - Automated Lighting
 
-##TO DO
+## TO DO
 
 - [] Add rotation towards the sun.
 - [x] Automate the watering.
