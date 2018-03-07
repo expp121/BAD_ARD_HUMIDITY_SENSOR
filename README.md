@@ -1,6 +1,6 @@
 
 # BaD_ARD_SMART_POT V0.1
-==============================
+=======================
 
 ## INTRODUCTION
 ------------------------------
@@ -17,6 +17,10 @@
 - Humidity Sensor
 - LED Lamp
 - Step motor
+- Visual Studio 2017 -https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Community&rel=15
+- Visual Micro - http://www.visualmicro.com/page/Arduino-Visual-Studio-Downloads.aspx
+- Arduino IDE - https://www.arduino.cc/en/Main/Software
+
 
 **Not sure if everything is listed**
 
