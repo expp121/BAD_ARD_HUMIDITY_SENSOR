@@ -33,7 +33,7 @@ void light_level_map();
 * @param uint8_t ifValmax,The maximum value in the if statement[0,255].
 * @return Void.
 */
-void analog_ramp(uint8_t rampTo, uint8_t Delay, uint8_t pin, uint8_t percenVal, uint8_t sensValmap);
+void analog_ramp(uint8_t rampTo, uint8_t Delay, uint8_t pin, uint8_t ifValmin, uint8_t ifValmax);
 
 /**@Brief If the humidity in the soil is below certain percentage slowly start a pump,else slowly turn off the pump.
 * @return Void.
@@ -134,4 +134,3 @@ void analog_ramp(uint8_t rampTo, uint8_t Delay,uint8_t pin,uint8_t ifValmin,uint
 		}
 	}
 }
-
