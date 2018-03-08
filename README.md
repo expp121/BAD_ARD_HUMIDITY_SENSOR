@@ -1,10 +1,9 @@
- # BaD_ARD_SMART_POT V0.1
-=======================
+# BaD_ARD_SMART_POT V0.1
 
 ### INTRODUCTION
 ------------------------------
 - The main purpose of the project is to minimize the time and effort needed for growing a plant.
-- The Project Writen on Arduino Uno
+- The Project is Writen on Arduino Uno
 - It is not tested and finished yet.
 
 ### Stuff used in the project
