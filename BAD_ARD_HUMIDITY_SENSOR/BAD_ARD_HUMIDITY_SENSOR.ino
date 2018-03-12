@@ -25,6 +25,14 @@ volatile uint8_t PhPercVal_g;
 */
 void light_level_map();
 
+/** @Brief Send more stable data from the sensors.
+* @param uint8_t Delay, Time to wait until next ramp up[ms].
+* @param uint8_t pin, Set the ramp to any pin.
+* @param uint8_t tests,how many time to read from the sensor(the higher the number the more stable data you will get).
+* @return int.
+*/
+int avrg_filter(uint8_t pin,uint8_t Delay,uint8_t tests);
+
 /** @Brief Slowly ramp up value.
 * @param uint8_t rampto, max Value to ramp to [0,255].
 * @param uint8_t Delay, Time to wait until next ramp up[ms].
@@ -73,7 +81,7 @@ void loop()
 
 void light_level_map()
 {
-	uint16_t sensor_valueL = analogRead(PIN_PHOTO_REST);
+	uint16_t sensor_valueL = avrg_filter(PIN_PHOTO_REST, 100, 10);
 	sensor_valueL = map(sensor_valueL, 0, 1024, 240, 10);
 	analogWrite(PIN_LED_LAMP, sensor_valueL);
 }
@@ -81,7 +89,7 @@ void light_level_map()
 void watering_the_plant()
 {
 	SenPercVal_g = smhs_read_map();
-	analog_ramp(230, 10, PIN_PUMP, SenPercVal_g, 40);
+	analog_ramp(230, 10, PIN_PUMP, SenPercVal_g,40);
 }
 
 void info_output()
@@ -99,7 +107,7 @@ void info_output()
 uint8_t smhs_read_map()
 {
 	uint16_t TmpValL;
-	TmpValL = analogRead(PIN_SMHS);
+	TmpValL = avrg_filter(PIN_SMHS, 100, 10);
 	TmpValL = map(TmpValL, 0, 1024, 100, 0);
 	return (uint8_t)(255 & TmpValL);
 
@@ -108,7 +116,7 @@ uint8_t smhs_read_map()
 uint8_t phr_read_map()
 {
 	uint16_t TmpValL;
-	TmpValL = analogRead(PIN_PHOTO_REST);
+	TmpValL = avrg_filter(PIN_PHOTO_REST, 100, 10);
 	TmpValL = map(TmpValL, 0, 1024, 0, 100);
 	return (uint8_t)(255 & TmpValL);
 }
@@ -133,4 +141,15 @@ void analog_ramp(uint8_t rampTo, uint8_t Delay,uint8_t pin,uint8_t ifValmin,uint
 			if (fadeValue == 0)break;
 		}
 	}
+}
+
+int avrg_filter(uint8_t pin, uint8_t Delay, uint8_t tests)
+{
+	int outputValL = 0;
+	for (uint8_t sample = 0; sample < tests; sample++)
+	{
+		outputValL += analogRead(pin);
+		delay(Delay);
+	}
+	return (int)(outputValL / tests);
 }
