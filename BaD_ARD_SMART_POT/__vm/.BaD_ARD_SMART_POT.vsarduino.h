@@ -76,6 +76,6 @@ typedef void *__builtin_va_list;
 #define pgm_read_float(address_short) float()
 #define pgm_read_ptr(address_short)   short()
 
-#include "BAD_ARD_HUMIDITY_SENSOR.ino"
+#include "Bad_ARD_SMART_POT.ino"
 #endif
 #endif

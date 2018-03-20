@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BAD_ARD_HUMIDITY_SENSOR.ino" />
+    <None Include="Bad_ARD_SMART_POT.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.BAD_ARD_HUMIDITY_SENSOR.vsarduino.h">
+    <ClInclude Include="__vm\.Bad_ARD_SMART_POT.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

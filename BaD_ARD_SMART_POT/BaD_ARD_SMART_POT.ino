@@ -2,7 +2,6 @@
 Author:	expp
 */
 
-
 #include <CayenneMQTTWiFi.h>
 
 // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
@@ -23,7 +22,7 @@ const int PIN_PHOTO_REST = A1;
 const int PIN_PUMP = A2;
 
 /**@Brief This is Lamp that is going to give light to the plant because the plant does't like direct sunlight*/
-const int PIN_LED_LAMP=A3;
+const int PIN_LED_LAMP = A3;
 
 /**@Brief This is the interval by wich the watering plant function will execute [min]  */
 const int IntervalWatering_g = 30;
@@ -53,7 +52,7 @@ void adjust_lights();
 * @param uint8_t tests,how many time to read from the sensor(the higher the number the more stable data you will get).
 * @return int.
 */
-uint16_t avrg_filter(uint8_t pin,uint8_t Delay,uint8_t tests);
+uint16_t avrg_filter(uint8_t pin, uint8_t Delay, uint8_t tests);
 
 /** @Brief Slowly ramp up value.
 * @param uint8_t rampto, max Value to ramp to [0,255].
@@ -126,9 +125,9 @@ void watering_the_plant()
 {
 	//Read and map the value from sensor 
 	SenPercVal_g = smhs_read_map();
-	
+
 	//Turn on slowly the pump if the humidity in the soil is under 40%.
-	analog_ramp(230, 10, PIN_PUMP, SenPercVal_g,40);
+	analog_ramp(230, 10, PIN_PUMP, SenPercVal_g, 40);
 }
 
 //Output information for the user in the Serial Monitor
@@ -165,7 +164,7 @@ uint8_t phr_read_map()
 }
 
 //Slowly turn on/off something in certain conditions.
-void analog_ramp(uint8_t rampTo, uint8_t Delay,uint8_t pin,uint8_t ifValmin,uint8_t ifValmax)
+void analog_ramp(uint8_t rampTo, uint8_t Delay, uint8_t pin, uint8_t ifValmin, uint8_t ifValmax)
 {
 	if (ifValmin < ifValmax)
 	{
@@ -209,7 +208,7 @@ void proc_handler()
 
 	//get the current miliseconds from wich the controler is turnned on.
 	CurrentTimeL = millis();
-	
+
 	//water the plant if the  CurrentTimeL-PreviousTimeWL is greater or equal to IntervalWatering_g * 60000;
 	if (CurrentTimeL - PreviousTimeWL >= IntervalWatering_g * 60000)
 	{
@@ -228,6 +227,6 @@ void CayenneInfo()
 {
 	SenPercVal_g = smhs_read_map();
 	PhPercVal_g = phr_read_map();
-	Cayenne.virtualWrite(0,SenPercVal_g);
-	Cayenne.virtualWrite(1,PhPercVal_g);
+	Cayenne.virtualWrite(0, SenPercVal_g);
+	Cayenne.virtualWrite(1, PhPercVal_g);
 }
