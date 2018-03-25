@@ -19,10 +19,13 @@ const int PIN_SMHS = A0;
 const int PIN_PHOTO_REST = A1;
 
 /**@Brief This is Pump for watering the pot(connected to 12V)*/
-const int PIN_PUMP = A2;
+const int PIN_PUMP = A3;
 
 /**@Brief This is Lamp that is going to give light to the plant because the plant does't like direct sunlight*/
-const int PIN_LED_LAMP = A3;
+const int PIN_LED_LAMP = A2;
+
+/**@Brief This is the water level sensor placed in the tank of water*/
+const int PIN_WATER_LEVEL_SENS = A4;
 
 /**@Brief This is the interval by wich the watering plant function will execute [min]  */
 const int IntervalWatering_g = 30;
@@ -36,7 +39,14 @@ volatile uint8_t SenPercVal_g;
 /**Light Level in Percents*/
 volatile uint8_t PhPercVal_g;
 
-/**@Brief This functions controls the interval that other functions will execute.
+volatile uint16_t WaterLevelUNF_g;
+
+/*Brief This function sends information about the light percentage and humidity in the soil in percents to the Cayenne service
+* @return Void.
+*/
+void CayenneInfo();
+
+/**@Brief This function controls the interval that other functions will execute.
 * @return Void.
 */
 void proc_handler();
@@ -93,6 +103,12 @@ void setup() {
 	pinMode(PIN_SMHS, INPUT);
 	/*Setting up the Photo Resistor Pin to receive data*/
 	pinMode(PIN_PHOTO_REST, INPUT);
+	/*Setting up the Pump Pin to send data*/
+	pinMode(PIN_PUMP,OUTPUT);
+	/*Setting up the Led lamp Pin to send data*/
+	pinMode(PIN_LED_LAMP, OUTPUT);
+	/*Setting up the water level sensor Pin to receive data*/
+	pinMode(PIN_WATER_LEVEL_SENS, INPUT);
 }
 
 // the loop function runs over and over again until power down or reset
@@ -126,8 +142,20 @@ void watering_the_plant()
 	//Read and map the value from sensor 
 	SenPercVal_g = smhs_read_map();
 
-	//Turn on slowly the pump if the humidity in the soil is under 40%.
-	analog_ramp(230, 10, PIN_PUMP, SenPercVal_g, 40);
+	WaterLevelUNF_g = analogRead(PIN_WATER_LEVEL_SENS);
+
+	uint8_t WaterLevelPercL = map(WaterLevelUNF_g, 0, 1024, 0, 100);
+
+	if (WaterLevelPercL > 20 && SenPercVal_g < 40)
+	{
+		//Turn on slowly the pump if the humidity in the soil is under 40%.
+		analog_ramp(230, 10, PIN_PUMP, SenPercVal_g, 40);
+	}
+	else if (WaterLevelPercL<20)
+	{
+		Cayenne.virtualWrite(3, "Fill The water tank");
+		Serial.println("Fill The water tank");
+	}
 }
 
 //Output information for the user in the Serial Monitor
@@ -142,9 +170,6 @@ void info_output()
 	Serial.print(PhPercVal_g);
 	Serial.println("%");
 }
-
-/*Send information about the sensors to the cayenne*/
-void CayenneInfo();
 
 uint8_t smhs_read_map()
 {
