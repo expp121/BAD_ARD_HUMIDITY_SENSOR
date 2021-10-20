@@ -3,7 +3,7 @@
 ### INTRODUCTION
 ------------------------------
 - The main purpose of the project is to minimize the time and effort needed for growing a plant.
-- The Project is Writen on Arduino Uno
+- The Project is writen for Arduino Uno
 - It is not tested and finished yet.
 
 ### Stuff used in the project
